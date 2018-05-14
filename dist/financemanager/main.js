@@ -282,13 +282,10 @@ var AuthGuardService = /** @class */ (function () {
         this.router = router;
     }
     AuthGuardService.prototype.canActivate = function () {
-        if (this.authService.isLogged) {
-            return true;
-        }
-        else {
+        if (!this.authService.getToken()) {
             this.router.navigate(['/auth']);
-            return false;
         }
+        return (this.authService.getToken() !== undefined);
     };
     AuthGuardService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
@@ -573,6 +570,7 @@ var CategoriesComponent = /** @class */ (function () {
     function CategoriesComponent(categoriesService, toastr) {
         this.categoriesService = categoriesService;
         this.toastr = toastr;
+        this.categories = [];
     }
     CategoriesComponent.prototype.ngOnInit = function () {
         this.getCategories();
@@ -1349,6 +1347,8 @@ var TransactionsComponent = /** @class */ (function () {
         this.transactionsService = transactionsService;
         this.categoriesService = categoriesService;
         this.toastr = toastr;
+        this.transactions = [];
+        this.categories = [];
     }
     TransactionsComponent.prototype.ngOnInit = function () {
         this.getCategories();
