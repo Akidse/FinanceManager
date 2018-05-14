@@ -11,7 +11,6 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
-  @Output() onAuth = new EventEmitter();
 
   login: string;
   pass: string;
@@ -30,8 +29,7 @@ export class AuthComponent implements OnInit {
   	    	if(result.auth){
   	    		this.authService.setToken(result.token);
   	    		this.toastr.success("You are logged succesfully", "Success");
-  	    		this.router.navigate(['/categories']);
-  	    		this.onAuth.emit();
+  	    		this.router.navigateByUrl('/categories');
   	    	}else{
   	    		this.toastr.error("Password or login is not correct", "Error");
   	    	}
