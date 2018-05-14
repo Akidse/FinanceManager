@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
-	categories: Category[];
+	categories: Category[] = [];
   constructor(
     private categoriesService: CategoriesService,
     private toastr: ToastrService) { }

@@ -13,8 +13,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./transactions.component.css']
 })
 export class TransactionsComponent implements OnInit {
-  transactions: Transaction[];
-  categories: Category[];
+  transactions: Transaction[] = [];
+  categories: Category[] = [];
 
   constructor(
     private transactionsService: TransactionsService,
