@@ -1,0 +1,20 @@
+<table *ngIf="categories !== undefined && categories.length" class="table table-bordered table-hover m-2 table-auto-layout">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let category of categories; let i = index">
+      <th scope="row">{{i+1}}</th>
+      <td>{{category.name}}</td>
+      <td>{{category.description}}</td>
+      <td class="text-center"><button routerLink="/category/view/{{category._id}}" type="button" class="btn btn-sm btn-primary mr-2">Edit</button><button (click)="removeCategory(category._id)" type="button" class="btn btn-sm btn-danger">Delete</button></td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="!categories.length" class="m-2 alert alert-warning">There aren't any categories, be free to add some :)</div>
+<button class="m-2 btn btn-primary" routerLink="/category/add">Add category</button>
