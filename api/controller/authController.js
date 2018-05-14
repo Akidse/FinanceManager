@@ -17,14 +17,14 @@ exports.createUser = function(req, res){
 			expiresIn: 86400 //expires in 24 hours
 		});
 
-		res.send({auth: true, token: token});
+		res.status(200).send({auth: true, token: token});
 	});
 };
 
 exports.loginUser = function(req, res){
 	User.findOne({name: req.body.name}, function(err, user){
-		if(err) return res.send('Error on the server');
-		if(user == null) return res.send('No user found');
+		if(err) return res.status(500).send({error: 'Error on the server'});
+		if(user == null) return res.status(200).send({error: 'No user found'});
 
 		var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
 		if(!passwordIsValid) return res.send({auth: false, token: null});
@@ -33,22 +33,22 @@ exports.loginUser = function(req, res){
 			expiresIn: 86400 //expires in 24hours
 		});
 
-		res.send({auth: true, token: token});
+		res.status(200).send({auth: true, token: token});
 	});
 };
 exports.getUser = function(req, res){
 	var token = req.headers['x-access-token'];
 
-	if(!token) return res.send({auth: false, message: 'No token provided.'});
+	if(!token) return res.status(401).send({auth: false, message: 'No token provided.'});
 
 	jwt.verify(token, config.get('secret'), function(err, decoded){
 		if(err) return res.send({auth: false, message: 'Failed to authenticate token.'});
 
 		User.findById(decoded.id, {password: 0}, function(err, user){
-			if(err) return res.send('There was a problem finding the user.');
-			if(user == null) return res.send('No user found.');
+			if(err) return res.status(500).send({error: 'There was a problem finding the user.'});
+			if(user == null) return res.status(200).send({error: 'No user found.'});
 
-			res.send(user); 
+			res.status(200).send(user); 
 		});
 	});
 }
